@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Agyle x EES AI Expertise Center</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+@font-face{font-family:"Otilito";src:url("fonts/TBJOtilito-Light.woff2") format("woff2");font-weight:300}
+@font-face{font-family:"Otilito";src:url("fonts/TBJOtilito-Regular.woff2") format("woff2");font-weight:400}
+@font-face{font-family:"Otilito";src:url("fonts/TBJOtilito-Bold.woff2") format("woff2");font-weight:700}
+
+:root{
+  --wit:#ffffff; --zwart:#000000; --blauw:#97D4E8; --blauw-licht:#eaf6fb; --blauw-zacht:#d6edf6;
+  --grijs:#6b6b6b; --lijn:#e3e3e3;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--wit);color:var(--zwart);font-family:"Otilito",Helvetica,Arial,sans-serif;font-weight:400;overflow:hidden}
+body{cursor:default;-webkit-font-smoothing:antialiased}
+
+#podium{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--wit)}
+#vlak{width:1600px;height:900px;position:relative;transform-origin:center center;flex:none}
+
+.slide{position:absolute;inset:0;padding:96px 120px 110px;display:none;flex-direction:column}
+.slide.aan{display:flex}
+
+.opschrift{font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);margin-bottom:22px}
+h1{font-size:64px;font-weight:700;line-height:1.02;letter-spacing:-.01em;text-transform:uppercase}
+h2{font-size:44px;font-weight:700;line-height:1.05;letter-spacing:-.01em;text-transform:uppercase;margin-bottom:38px}
+h3{font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px}
+p,li{font-size:22px;line-height:1.4}
+.stil{color:var(--grijs)}
+.klein{font-size:17px;line-height:1.45}
+.regel{border-top:1px solid var(--lijn)}
+
+.rij{display:flex;gap:48px;flex:1;min-height:0}
+.kol{flex:1;min-width:0}
+.vlak-blauw{background:var(--blauw-licht);padding:40px 44px;border-radius:6px}
+.vlak-zacht{background:var(--blauw-zacht);padding:40px 44px;border-radius:6px}
+.kaart{border:1px solid var(--lijn);padding:32px 34px;border-radius:6px;flex:1;display:flex;flex-direction:column}
+.kaart.blauw{background:var(--blauw-licht);border-color:var(--blauw-licht)}
+.kaart .nr{font-size:15px;letter-spacing:.18em;color:var(--grijs);margin-bottom:14px}
+
+.voet{position:absolute;left:120px;right:120px;bottom:44px;display:flex;align-items:center;justify-content:space-between;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+
+/* cijfers */
+.cijfers{display:flex;gap:60px;margin:48px 0 40px}
+.cijfer{flex:1}
+.cijfer b{display:block;white-space:nowrap;font-size:120px;font-weight:700;line-height:.95;letter-spacing:-.03em}
+.cijfer span{display:block;margin-top:14px;font-size:22px;color:var(--grijs)}
+.cijfer.blauw b{background:var(--blauw);display:inline-block;padding:6px 22px 0;border-radius:6px}
+
+/* dan-nu blok op demoslides */
+.dannu{display:flex;flex-direction:column;gap:18px;margin-top:8px}
+.dannu .blok{border:1px solid var(--lijn);border-radius:6px;padding:20px 24px}
+.dannu .blok.blauw{background:var(--blauw-licht);border-color:var(--blauw-licht)}
+.dannu .kop{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);margin-bottom:8px}
+.dannu .groot{font-size:56px;font-weight:700;line-height:1;letter-spacing:-.02em}
+.dannu .groot small{display:block;font-size:20px;font-weight:400;color:var(--grijs);letter-spacing:0;margin-top:8px}
+.dannu p{font-size:18px;line-height:1.4;margin-top:8px}
+.pijl{font-size:40px;line-height:1;color:var(--grijs);text-align:center}
+
+.streep{height:16px;width:160px;background:var(--blauw);margin-bottom:34px;border-radius:3px}
+
+table{width:100%;border-collapse:collapse;font-size:21px}
+th{text-align:left;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--grijs);font-weight:400;padding:0 18px 14px 0;border-bottom:1px solid var(--zwart)}
+td{padding:18px 18px 18px 0;border-bottom:1px solid var(--lijn);vertical-align:top;line-height:1.35}
+td.stip::before{content:"";display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--blauw);margin-right:14px;vertical-align:middle}
+td.stip.leeg::before{background:var(--wit);border:1px solid var(--grijs)}
+table.compact{font-size:19px}
+table.compact td{padding:12px 18px 12px 0;line-height:1.3}
+
+/* vier stappen */
+.stappen{display:flex;gap:24px;flex:0 0 auto;align-items:stretch}
+.stap{flex:1;border:1px solid var(--lijn);border-radius:6px;padding:30px 30px 26px}
+.stap.blauw{background:var(--blauw-licht);border-color:var(--blauw-licht)}
+.stap .nr{font-size:14px;letter-spacing:.18em;color:var(--grijs);margin-bottom:10px}
+.stap h3{font-size:26px;margin-bottom:12px}
+.stap p{font-size:20px;line-height:1.4}
+.stap ul{list-style:none;margin-top:16px;padding-top:14px;border-top:1px solid rgba(0,0,0,.12)}
+.stap li{font-size:18px;line-height:1.55;padding-left:16px;position:relative;margin-top:6px}
+.stap li::before{content:"";position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--blauw)}
+
+/* lijst met nummers */
+ol.punten{list-style:none;counter-reset:n}
+ol.punten li{counter-increment:n;display:block;position:relative;padding:14px 0 14px 48px;border-bottom:1px solid rgba(0,0,0,.10);font-size:21px;line-height:1.38}
+ol.punten li::before{content:counter(n);font-weight:700;position:absolute;left:0;top:14px}
+ol.punten li b{font-weight:700}
+
+/* regelgeving */
+.regels{display:grid;grid-template-columns:1fr 1fr;gap:34px 56px;flex:0 0 auto}
+.regel-blok{border-top:2px solid var(--blauw);padding-top:16px}
+.regel-blok h3{font-size:30px;margin-bottom:14px}
+.regel-blok ul{list-style:none}
+.regel-blok li{font-size:20px;line-height:1.45;padding-left:18px;position:relative;margin-top:6px}
+.regel-blok li::before{content:"";position:absolute;left:0;top:12px;width:7px;height:7px;border-radius:50%;background:var(--blauw)}
+
+
+/* van naar */
+table.vannaar td{padding:26px 0;border-bottom:1px solid var(--lijn);vertical-align:middle}
+table.vannaar td.wie{width:560px}
+table.vannaar td.wie b{display:block;font-size:24px;font-weight:700}
+table.vannaar td.wie span{display:block;font-size:18px;color:var(--grijs);margin-top:4px}
+table.vannaar td.van,table.vannaar td.naar{font-size:52px;font-weight:700;line-height:1;letter-spacing:-.02em;white-space:nowrap;width:340px}
+table.vannaar td.van{color:var(--grijs);font-weight:300}
+table.vannaar td small{display:block;font-size:16px;font-weight:400;color:var(--grijs);letter-spacing:0;margin-top:8px}
+table.vannaar td.naar::before{content:"to";display:inline-block;font-size:16px;font-weight:400;color:var(--grijs);letter-spacing:.14em;text-transform:uppercase;margin-right:26px;vertical-align:middle}
+
+
+/* stats */
+table.stats td{padding:26px 0;border-bottom:1px solid var(--lijn);vertical-align:middle}
+table.stats td.getal{width:520px;font-size:60px;font-weight:700;line-height:1;letter-spacing:-.02em;white-space:nowrap}
+table.stats td.getal small{display:block;font-size:17px;font-weight:400;color:var(--grijs);letter-spacing:.06em;text-transform:uppercase;margin-top:10px}
+table.stats td.uitleg{font-size:21px;line-height:1.42;padding-left:40px}
+table.stats td.uitleg b{display:block;font-weight:700}
+
+/* tegels */
+.tegels{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;flex:1}
+.tegel{background:var(--blauw-licht);border-radius:6px;padding:28px 30px;display:flex;flex-direction:column}
+.tegel b{font-size:64px;font-weight:700;line-height:1;letter-spacing:-.02em;white-space:nowrap}
+.tegel span{display:block;margin-top:12px;font-size:19px;line-height:1.38}
+.tegel small{display:block;margin-top:auto;padding-top:14px;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--grijs)}
+
+/* vragen */
+ol.vragen{list-style:none;counter-reset:v;margin-top:10px}
+ol.vragen li{counter-increment:v;font-size:34px;line-height:1.25;font-weight:700;padding:20px 0 20px 70px;position:relative;border-bottom:1px solid var(--lijn)}
+ol.vragen li::before{content:counter(v);position:absolute;left:0;top:18px;width:46px;height:46px;border-radius:50%;background:var(--blauw);font-size:22px;display:flex;align-items:center;justify-content:center}
+
+/* video */
+.video{width:100%;max-height:520px;background:#000;border-radius:6px;display:block}
+
+/* bediening */
+#knoppen{position:fixed;right:22px;bottom:18px;display:flex;gap:8px;z-index:10}
+#knoppen button{font:inherit;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:10px 14px;border:1px solid var(--lijn);background:var(--wit);color:var(--zwart);border-radius:4px;cursor:pointer}
+#knoppen button:hover{border-color:var(--zwart)}
+#teller{position:fixed;left:22px;bottom:22px;font-size:13px;letter-spacing:.14em;color:var(--grijs);z-index:10}
+#notities{position:fixed;left:0;right:0;bottom:0;background:#111;color:#eee;padding:18px 32px;font-size:16px;line-height:1.5;display:none;z-index:9;max-height:34vh;overflow:auto}
+#notities.aan{display:block}
+.fs span.uit{display:none}
+body:fullscreen .fs span.aan{display:none}
+body:fullscreen .fs span.uit{display:inline}
+</style>
+</head>
+<body>
+<div id="podium"><div id="vlak">
+
+<!-- 1 -->
+<section class="slide" data-notes="Kort. Geen wie-zijn-wij. 'You asked for screens, not slides. Ten pages, the rest is the tools.' Doel in één zin: de eerste klus met Parijs.">
+  <div class="opschrift">Utrecht · 24 September 2026</div>
+  <h1>Today</h1>
+  <div class="rij" style="margin-top:40px">
+    <div class="kol">
+      <table>
+        <tr><td style="width:110px;color:var(--grijs)">09:30</td><td>Coffee and goals</td></tr>
+        <tr><td style="color:var(--grijs)">10:00</td><td>How we work, how we stay compliant, three cases</td></tr>
+        <tr><td style="color:var(--grijs)">11:30</td><td>CEIA: your cases and your stacks</td></tr>
+        <tr><td style="color:var(--grijs)">12:30</td><td>Lunch</td></tr>
+        <tr><td style="color:var(--grijs)">13:15</td><td>The EES AI expertise network</td></tr>
+        <tr><td style="color:var(--grijs)">13:45</td><td>What we do together, and the first job</td></tr>
+      </table>
+      <p style="margin-top:36px"><b>One goal for today:</b> agree on how we can work together.</p>
+    </div>
+    <div class="kol vlak-blauw" style="flex:0 0 560px">
+      <h3>What you asked for</h3>
+      <ol class="punten">
+        <li>What is running today in the hands of real users</li>
+        <li>How it was built, screens rather than slides</li>
+        <li>Including the parts that did not work</li>
+        <li>How we move from a demonstrator to production</li>
+      </ol>
+      <p class="klein" style="margin-top:18px">Sébastien, 1 September</p>
+    </div>
+  </div>
+  <div class="voet"><span>Agyle · Eiffage Énergie Systèmes · AI Expertise Center</span></div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-notes="Algemeen, geen klant. Intake is één formulier en één week. PoC is vast aantal uren, acceptatie is het oordeel van de gebruiker. Productie in hun tenant, code is van hen. Care: vaste contactpersoon, maandelijkse check, nieuwe entiteit is een profiel en geen code.">
+  <div class="opschrift">How we work</div>
+  <h2>From idea to production, four steps</h2>
+  <div class="stappen">
+    <div class="stap">
+      <div class="nr">01 · One week</div><h3>Intake</h3>
+      <p>One form, filled in with the user.</p>
+      <ul><li>Who, how often, how long</li><li>What goes wrong today</li><li>The rule nobody wrote down</li></ul>
+    </div>
+    <div class="stap blauw">
+      <div class="nr">02 · Two to four weeks</div><h3>Proof of concept</h3>
+      <p>On your own documents. Measured, not demonstrated.</p>
+      <ul><li>Golden run, mutation test, blind test</li><li>Fixed hours</li><li>The user's judgement decides</li></ul>
+    </div>
+    <div class="stap">
+      <div class="nr">03 · Four to eight weeks</div><h3>Production</h3>
+      <p>Inside your tenant, to your IT policy.</p>
+      <ul><li>Your login, key vault, pipeline</li><li>The code is yours</li><li>Go-live side by side with the user</li></ul>
+    </div>
+    <div class="stap">
+      <div class="nr">04 · Ongoing</div><h3>Care</h3>
+      <p>One named contact, one monthly check.</p>
+      <ul><li>Accuracy measured every month</li><li>New entity: a profile, not new code</li><li>Updates tested before they go live</li></ul>
+    </div>
+  </div>
+  <p class="klein stil" style="margin-top:28px">Measured, not demonstrated. The user decides. Built once, ready for the next entity.</p>
+  <div class="voet"><span>Agyle · Eiffage Énergie Systèmes · AI Expertise Center</span></div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-notes="Open met Vincent: 'All the technology, and no compromise on security.' Dit is de regelgeving-slide: AVG, EU AI Act (hoog risico voor werving, verplichtingen sinds 2 augustus 2026), dataresidentie, hun eigen IT-beleid. Feiten tussen haken eerst door de security-man laten bevestigen: DPA-datum, zero retention, Vertex-regio's. Zeg zelf: geen ISO 27001, geen pentest.">
+  <div class="opschrift">How we stay compliant</div>
+  <h2>Secure and compliant, by design</h2>
+  <div class="regels">
+    <div class="regel-blok">
+      <h3>GDPR</h3>
+      <ul><li>We are the processor, the entity stays controller. DPA in place.</li><li>Only the fields the process needs.</li><li>Pseudonymised where possible.</li><li>Deleted after the proof of concept, confirmed in writing.</li></ul>
+    </div>
+    <div class="regel-blok">
+      <h3>EU AI Act</h3>
+      <ul><li>Document tools: minimal risk.</li><li>Recruitment screening: high risk, built accordingly.</li><li>A person takes every decision. Every judgement cites its source.</li><li>Candidates informed, logs kept.</li></ul>
+    </div>
+    <div class="regel-blok">
+      <h3>Data residency</h3>
+      <ul><li>Data stays in the EU, separated per entity.</li><li>Models through the API only. Nothing fine-tuned, nothing trained on your data.</li><li>Zero retention available.</li><li>Same models inside your Google Cloud tenant, EU region.</li></ul>
+    </div>
+    <div class="regel-blok">
+      <h3>Your own IT policy</h3>
+      <ul><li>Production inside your tenant: your login, key vault, pipeline, repository.</li><li>Built to the entity's policy.</li><li>One EES entity already wrote one for AI delivery. We pass its check.</li></ul>
+    </div>
+  </div>
+  <div class="voet"><span>Agyle · Eiffage Énergie Systèmes · AI Expertise Center</span></div>
+</section>
+
+<!-- D1 -->
+<section class="slide" data-notes="Calcula, Engelse versie met stem en muziek, 84 s. Cijfers uit de Kropman-notulen van 22 april 2026: WUR-aanvraag, circa 11.000 regels, circa 3.000 unieke omschrijvingen, handmatig coderen circa 16 uur. Resultaatcijfer na de testfase is nog niet gemeten: zeg 'minutes to match, the estimator checks', geen getal. Klant in beeld is fictief; Kropman niet noemen zonder toestemming van Wim.">
+  <div class="opschrift">Video · One of three</div>
+  <div class="streep"></div>
+  <div class="rij">
+    <div class="kol" style="flex:0 0 560px">
+      <h2 style="margin-bottom:22px">Calcula, Netherlands<br><span style="font-weight:300">Request to calculation</span></h2>
+      <div class="dannu">
+        <div class="blok">
+          <div class="kop">Today</div>
+          <div class="groot">16 h<small>per request</small></div>
+          <p>One request, 11,000 lines, 3,000 different descriptions. Every one looked up by hand in the master list.</p>
+        </div>
+        <div class="blok blauw">
+          <div class="kop">With the tool</div>
+          <div class="groot">30 min<small>per request</small></div>
+          <p>Every line gets a code and a confidence score. The estimator approves. The same Excel comes back.</p>
+        </div>
+      </div>
+    </div>
+    <div class="kol">
+      <video class="video" src="media/calcula-en.mp4" controls preload="metadata"></video>
+      <p class="klein stil" style="margin-top:14px">Their own figures, from the estimating team. Looking up becomes checking.</p>
+    </div>
+  </div>
+  <div class="voet"><span>Agyle · Eiffage Énergie Systèmes · AI Expertise Center</span></div>
+</section>
+
+<!-- D2 -->
+<section class="slide" data-notes="Video 66 s. Daarna één zin: core business, het engineeringdocument waar de eindklant voor betaalt. Cijfers uit het aandeelhoudersdeck: drie engineers tot twee maanden per document. Nu: één stagiair, twee dagen.">
+  <div class="opschrift">Video · Two of three</div>
+  <div class="streep"></div>
+  <div class="rij">
+    <div class="kol" style="flex:0 0 560px">
+      <h2 style="margin-bottom:22px">Van den Pol, EES Netherlands<br><span style="font-weight:300">PLC code into the functional design</span></h2>
+      <div class="dannu">
+        <div class="blok">
+          <div class="kop">Today</div>
+          <div class="groot">3 engineers<small>two months per document</small></div>
+          <p>And again after every change to the installation.</p>
+        </div>
+        <div class="blok blauw">
+          <div class="kop">With the tool</div>
+          <div class="groot">1 intern<small>two days per document</small></div>
+          <p>In production. The engineers review, they no longer write.</p>
+        </div>
+      </div>
+    </div>
+    <div class="kol">
+      <video class="video" src="media/fds-generator.mp4" controls preload="metadata"></video>
+      <p class="klein stil" style="margin-top:14px">Core business, not productivity: the engineering document the end client pays for.</p>
+    </div>
+  </div>
+  <div class="voet"><span>Agyle · Eiffage Énergie Systèmes · AI Expertise Center</span></div>
+</section>
+
+<!-- D3 -->
+<section class="slide" data-notes="Video 69 s. Daarna kort live in EES Screening demo.html (F11, R reset). Cijfers uit Parijs: 1 tot 2 weken per vacature, midden 7,5 dagen; met de tool 1 dag lezen en sorteren, interviews blijven. Eén zin over de review van 15 september.">
+  <div class="opschrift">Video and live · Three of three</div>
+  <div class="streep"></div>
+  <div class="rij">
+    <div class="kol" style="flex:0 0 560px">
+      <h2 style="margin-bottom:22px">EES Portugal<br><span style="font-weight:300">From applications to a shortlist</span></h2>
+      <div class="dannu">
+        <div class="blok">
+          <div class="kop">Today</div>
+          <div class="groot">7.5 days<small>per vacancy</small></div>
+          <p>One recruiter reads 35 applications in every format, before the first interview.</p>
+        </div>
+        <div class="blok blauw">
+          <div class="kop">With the tool</div>
+          <div class="groot">1 day<small>per vacancy</small></div>
+          <p>Reading and sorting done. Interviews and the decision stay exactly where they are.</p>
+        </div>
+      </div>
+    </div>
+    <div class="kol">
+      <video class="video" src="media/portugal-kort.mp4" controls preload="metadata"></video>
+      <p class="klein stil" style="margin-top:14px">Their own figures, from the intake form. Filled in by the HR manager.</p>
+    </div>
+  </div>
+  <div class="voet"><span>Agyle · Eiffage Énergie Systèmes · AI Expertise Center</span></div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-notes="Beredeneerde cijfers, geen metingen. 230 naar 42 uur: S&G 10 tenders x 8 uur regelcontrole = 80 naar 20; EQOS 120 rapporten x 7,5 min = 15 naar 4; Eiffie circa 300 gesprekken x 3 min = 15 naar 2; Portugal 2 vacatures x 7,5 dag = 120 naar 16. 26 weken: 3 engineers x 2 maanden per FDS-document, nu 2 dagen. 6 maanden: gangbare duur van een AI-pilot met stuurgroep; onze PoC gemiddeld 3 weken (EQOS, Portugal, S&G, CIEL). 12 bedrijven, 29 projecten: CRM 22 september.">
+  <div class="opschrift">What it returned</div>
+  <h2>From this to this</h2>
+  <table class="vannaar">
+    <tbody>
+      <tr><td class="wie"><b>Typing over, checking, sorting</b><span>Across the tools now running in the group</span></td><td class="van">230 h<small>a month by hand</small></td><td class="naar">42 h<small>a month of checking, the rest is done</small></td></tr>
+      <tr><td class="wie"><b>Engineering documents</b><span>Functional designs, wiring lists, I/O assignments</span></td><td class="van">26 weeks<small>of engineering per document</small></td><td class="naar">2 days<small>per document, reviewed by an engineer</small></td></tr>
+      <tr><td class="wie"><b>From question to proof</b><span>Measured on the entity's own material</span></td><td class="van">6 months<small>the usual pilot, with slide decks</small></td><td class="naar">3 weeks<small>fixed hours, the user decides</small></td></tr>
+      <tr><td class="wie"><b>Inside the group</b><span>Started with one company in the Netherlands</span></td><td class="van">1 company<small>2025</small></td><td class="naar">12 companies<small>5 countries, 29 projects</small></td></tr>
+    </tbody>
+  </table>
+  <div class="voet"><span>Agyle · Eiffage Énergie Systèmes · AI Expertise Center</span></div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-notes="Per rij één zin, alleen business. De lege rij Parijs is de opmaat naar de volgende slide. Belux en Portugal: stand bij Abdul en Quirijn ophalen.">
+  <div class="opschrift">Across the group</div>
+  <h2>Where every country stands</h2>
+  <table class="compact">
+    <thead><tr><th style="width:360px">Entity</th><th>What</th><th style="width:460px">Status</th></tr></thead>
+    <tbody>
+      <tr><td class="stip">EES Netherlands</td><td>Ten companies: calculation, reporting, engineering, service desk, recruitment</td><td>Running since 2025, in production</td></tr>
+      <tr><td class="stip">EQOS, Austria</td><td>Day reports to ÖBB</td><td>Phase 1 signed, kick-off 25 September</td></tr>
+      <tr><td class="stip">Schwarz &amp; Grantz, Germany</td><td>Tender against calculation</td><td>Proof of concept delivered, product phase in discussion</td></tr>
+      <tr><td class="stip">Bohn, Germany</td><td>I/O assignment from schematics</td><td>Proof of concept done, product phase and service year 1 agreed</td></tr>
+      <tr><td class="stip">CIEL, Switzerland</td><td>Quantities from drawings</td><td>Proof of concept delivered, review 28 September</td></tr>
+      <tr><td class="stip">EES Portugal</td><td>Recruitment screening</td><td>Proof of concept delivered, review done</td></tr>
+      <tr><td class="stip">EES Belux</td><td>Supplier offers against the estimate</td><td>Proof of concept in build</td></tr>
+      <tr><td class="stip leeg stil">EES France, Paris</td><td class="stil">Nothing yet</td><td class="stil">Your turn</td></tr>
+    </tbody>
+  </table>
+  <div class="voet"><span>Agyle · Eiffage Énergie Systèmes · AI Expertise Center</span></div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-notes="Dit is de uitdaging. Elk land stuurde iets, Parijs nog niet. Vier vragen, hardop, en dan stil zijn. Doel: één proces, één formulier, één gebruiker, vandaag genoemd.">
+  <div class="opschrift">Together</div>
+  <h2>Every country sent us something.<br>Paris, not yet.</h2>
+  <ol class="vragen">
+    <li>What can we do together?</li>
+    <li>How can we help you?</li>
+    <li>How does work from the entities reach us?</li>
+    <li>What is on your desk right now that we can pick up as a proof of concept, this month?</li>
+  </ol>
+  <p style="margin-top:34px"><b>One process, one form, one user.</b> Four weeks later you see it measured on your own material.</p>
+  <div class="voet"><span>Agyle · Eiffage Énergie Systèmes · AI Expertise Center</span></div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-notes="Abduls slide. Vincents model: units betalen on demand, hij kan partners als Agyle betalen. Drie rollen, dan de twee afspraken, dan de eerste klus benoemen.">
+  <div class="opschrift">Together</div>
+  <h2>How we work together</h2>
+  <div class="rij" style="gap:28px;flex:0 0 auto">
+    <div class="kaart">
+      <div class="nr">The entity</div>
+      <h3>Asks and pays, per job</h3>
+      <p>On demand, the model Vincent described in Paris. The model that already runs in the Netherlands.</p>
+    </div>
+    <div class="kaart">
+      <div class="nr">The CEIA</div>
+      <h3>Frames, governs, spreads</h3>
+      <p>Finds the use case, sets the rules, carries what one entity learned to the next.</p>
+    </div>
+    <div class="kaart blauw">
+      <div class="nr">Agyle</div>
+      <h3>Builds, measures, hands over</h3>
+      <p>Into the entity's tenant. Built once, ready for the others.</p>
+    </div>
+  </div>
+  <div style="margin-top:40px" class="regel">
+    <p style="padding-top:24px"><b>One data agreement for the group,</b> so no entity has to ask twice.</p>
+    <p style="padding-top:12px"><b>Agyle in the EES AI network,</b> with a hands-on session per country.</p>
+    <p style="padding-top:12px"><b>The first job with Paris,</b> named today, measured within four weeks.</p>
+  </div>
+  <div class="voet"><span>Agyle · Eiffage Énergie Systèmes · AI Expertise Center</span></div>
+</section>
+
+</div></div>
+
+<div id="teller"></div>
+<div id="knoppen">
+  <button id="vorige" title="Previous (←)">←</button>
+  <button id="volgende" title="Next (→, click, space)">→</button>
+  <button id="fs" class="fs" title="Fullscreen (F)"><span class="aan">Fullscreen</span><span class="uit">Exit</span></button>
+</div>
+<div id="notities"></div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const vlak=document.getElementById('vlak');
+  const teller=document.getElementById('teller');
+  const notities=document.getElementById('notities');
+  let i=0;
+
+  function toon(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('aan',k===i));
+    teller.textContent=(i+1)+' / '+slides.length;
+    notities.textContent=slides[i].dataset.notes||'';
+    location.hash=String(i+1);
+    document.querySelectorAll('video').forEach(v=>{ if(!slides[i].contains(v)) v.pause(); });
+  }
+  function schaal(){
+    const s=Math.min(innerWidth/1600, innerHeight/900);
+    vlak.style.transform='scale('+s+')';
+  }
+  function volgende(){toon(i+1)}
+  function vorige(){toon(i-1)}
+  function fullscreen(){
+    if(document.fullscreenElement) document.exitFullscreen();
+    else document.body.requestFullscreen();
+  }
+
+  addEventListener('resize',schaal);
+  addEventListener('keydown',e=>{
+    if(e.target.isContentEditable) return;
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'||e.key==='Enter'){e.preventDefault();volgende();}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'||e.key==='Backspace'){e.preventDefault();vorige();}
+    else if(e.key==='Home'){toon(0);}
+    else if(e.key==='End'){toon(slides.length-1);}
+    else if(e.key==='f'||e.key==='F'){fullscreen();}
+    else if(e.key==='n'||e.key==='N'){notities.classList.toggle('aan');}
+  });
+  document.getElementById('podium').addEventListener('click',e=>{
+    if(e.target.closest('video, button, a, [contenteditable]')) return;
+    volgende();
+  });
+  document.getElementById('volgende').addEventListener('click',volgende);
+  document.getElementById('vorige').addEventListener('click',vorige);
+  document.getElementById('fs').addEventListener('click',fullscreen);
+  addEventListener('hashchange',()=>{const n=parseInt(location.hash.slice(1)||'1',10)-1; if(n!==i) toon(n);});
+
+  schaal();
+  toon(parseInt(location.hash.slice(1)||'1',10)-1);
+})();
+</script>
+</body>
+</html>
